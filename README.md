@@ -67,3 +67,19 @@ public UserDetailsManager userDetailsManager() {
 
 This configuration creates a user in place of the default one. In this case the username will be `user_1` and the password
 will be `password_1`.
+
+If we use the code above we will run into some issues. When we try to log in with the configures credentials, Spring Security 
+tries to encode the provided password and compare it to the configured one. But because we did not specify a `PasswordEncoder`
+this will fail with an Exception.
+
+The solution for this problem is simple, we need to provide a `PasswordEncoder` bean like the following.
+
+```java
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
+```
+
+There are multiple implementations of the `PasswordEncoder` interface, `BCryptPasswordEncoder` is just one of them.
+With the `DelegatingPasswordEncoder` implementation we can even use multiple encoders besides each other.
