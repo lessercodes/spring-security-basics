@@ -42,7 +42,13 @@ public class WebSecurityConfig {
                 .roles(Roles.ADMIN.name())
                 .build();
 
-        return new InMemoryUserDetailsManager(john, admin);
+        val trainee = User.builder()
+                .username("trainee")
+                .password(passwordEncoder.encode("password"))
+                .roles(Roles.ADMIN_TRAINEE.name())
+                .build();
+
+        return new InMemoryUserDetailsManager(john, admin, trainee);
     }
 
     @Bean
