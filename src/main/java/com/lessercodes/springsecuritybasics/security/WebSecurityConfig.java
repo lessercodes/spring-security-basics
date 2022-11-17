@@ -1,4 +1,4 @@
-package com.lessercodes.springsecuritybasics.config;
+package com.lessercodes.springsecuritybasics.security;
 
 import lombok.val;
 import org.springframework.context.annotation.Bean;
@@ -33,10 +33,16 @@ public class WebSecurityConfig {
         val john = User.builder()
                 .username("john")
                 .password(passwordEncoder.encode("password"))
-                .roles("STUDENT")
+                .roles(Roles.STUDENT.name())
                 .build();
 
-        return new InMemoryUserDetailsManager(john);
+        val admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("password"))
+                .roles(Roles.ADMIN.name())
+                .build();
+
+        return new InMemoryUserDetailsManager(john, admin);
     }
 
     @Bean
