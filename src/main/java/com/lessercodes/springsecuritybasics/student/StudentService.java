@@ -27,6 +27,13 @@ public class StudentService {
                 .toList();
     }
 
+    public Student getStudent(Long id) {
+        if (!students.containsKey(id)) {
+            throw new IllegalStateException("Student with id [] does not exist");
+        }
+        return students.get(id);
+    }
+
     public void registerStudent(Student student) {
         val id = System.currentTimeMillis();
         students.putIfAbsent(id, new Student(id, student.getName()));
