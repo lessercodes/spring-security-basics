@@ -25,6 +25,8 @@ public class WebSecurityConfig {
                 })
                 .httpBasic()
                 .and()
+                .csrf()
+                    .disable()
                 .build();
     }
 
