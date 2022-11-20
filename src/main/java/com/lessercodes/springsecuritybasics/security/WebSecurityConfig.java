@@ -28,11 +28,13 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeRequests(conf -> {
-                    conf.antMatchers("/", "index", "/css/**", "/js/**");
+                    conf.antMatchers("/", "/css/**", "/js/**").permitAll();
                     conf.antMatchers("/api/**").hasRole(STUDENT.name());
                     conf.anyRequest().authenticated();
                 })
-                .httpBasic()
+                .formLogin()
+                    .loginPage("/login").permitAll()
+                    .defaultSuccessUrl("/courses")
                 .and()
                 .csrf()
                     .disable()
